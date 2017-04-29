@@ -14,7 +14,6 @@
 
 
   <script>
-    //basic map config with custom fills, mercator projection
     var map = new Datamap({
         scope: 'world',
         element: document.getElementById('container'),
@@ -27,21 +26,36 @@
         },
 
         data: {
-          USA: {fillKey: 'lt50' },
-          RUS: {fillKey: 'lt50' },
-          CAN: {fillKey: 'lt50' },
-          BRA: {fillKey: 'gt50' },
-          ARG: {fillKey: 'gt50'},
-          COL: {fillKey: 'gt50' },
-          AUS: {fillKey: 'gt50' },
-          ZAF: {fillKey: 'gt50' },
-          MAD: {fillKey: 'gt50' }
+            USA: {fillKey: 'lt50'},
+            RUS: {fillKey: 'lt50'},
+            CAN: {fillKey: 'lt50'},
+            BRA: {fillKey: 'gt50'},
+            ARG: {fillKey: 'gt50'},
+            COL: {fillKey: 'gt50'},
+            AUS: {fillKey: 'gt50'},
+            ZAF: {fillKey: 'gt50'},
+            MAD: {fillKey: 'gt50'}
+        },
+
+
+        done: function(datamap) {
+            d3.selectAll(".datamap").on('click', function(geography) {
+                var longLat = map.projection.invert([d3.event.layerX, d3.event.layerY]);
+                d3.json('/getTornados/'+longLat[0]+"/"+longLat[1], function(response) {
+                    console.log(response);
+                    var coords = response.tornadoCoords;
+                    var tornados = coords.map(function (el) {
+                        return {name: 'Tornado', latitude: el[1], longitude: el[0], radius: 10, fillKey: 'gt50'};
+                    });
+                    map.bubbles(tornados);
+                });
+            });
         }
-      })
+    });
 
 
       //sample of the arc plugin
-      map.arc([
+    /*  map.arc([
        {
         origin: {
             latitude: 40.639722,
@@ -63,15 +77,14 @@
           }
       }
       ], {strokeWidth: 2});
-
+      */
 
        //bubbles, custom popup on hover template
      map.bubbles([
-       {name: 'Hot', latitude: 21.32, longitude: 5.32, radius: 10, fillKey: 'gt50'},
-       {name: 'Chilly', latitude: -25.32, longitude: 120.32, radius: 18, fillKey: 'lt50'},
-    {name: 'Hot again', latitude: 21.32, longitude: -84.32, radius: 8, fillKey: 'gt50'},
-	{name: 'l33t haxxor team', latitude: 58.41, longitude: 15.62, radius: 10, fillKey: 'gt50'},
-
+        {name: 'Hot', latitude: 21.32, longitude: 5.32, radius: 10, fillKey: 'gt50'},
+        {name: 'Chilly', latitude: -25.32, longitude: 120.32, radius: 18, fillKey: 'lt50'},
+        {name: 'Hot again', latitude: 21.32, longitude: -84.32, radius: 8, fillKey: 'gt50'},
+	    {name: 'l33t haxxor team', latitude: 58.41, longitude: 15.62, radius: 10, fillKey: 'gt50'}
      ], {
        popupTemplate: function(geo, data) {
          return "<div class='hoverinfo'>" + data.name + "</div>";
