@@ -3,7 +3,6 @@
 
 from pyhdf.SD import SD, SDC
 import numpy as np
-import pprint
 
 file_name = '../assets/example_data/MYD05_L2.A2017109.0000.006.NRT.hdf'
 
