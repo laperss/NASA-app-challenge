@@ -7,6 +7,8 @@ Recent research indicates a relationship between the amount of aerosol particles
 ## Dependencies
 * [HDF4](https://support.hdfgroup.org/)
 * [Python-HDF4](https://pypi.python.org/pypi/python-hdf4)
+  For plotting data in python
+* [mpltoolkits.basemap](https://matplotlib.org/basemap/)
 
 ## Links
 * [Mesoscale Convective Systems (MCS)](https://en.wikipedia.org/wiki/Mesoscale_convective_system)
