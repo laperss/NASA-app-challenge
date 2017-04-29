@@ -17,5 +17,5 @@ Recent research indicates a relationship between the amount of aerosol particles
 
 ## Instructions
 * To run example script, in scripts folder:  
-  ``` python read_data_example.py```
+  `python read_data_example.py`
   this should print information about the content of the HDF file in assets/example_data/.
