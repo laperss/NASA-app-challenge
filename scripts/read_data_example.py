@@ -8,7 +8,7 @@ file_name = '../assets/example_data/MYD05_L2.A2017109.0000.006.NRT.hdf'
 
 file = SD(file_name, SDC.READ)
 
-print('Data size: ' + file.info())
+print('Data size: ' + str(file.info()[0]) + ', ' + str(file.info()[1]))
 datasets = file.datasets()
 
 # Retrieve correctly scaled data
