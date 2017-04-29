@@ -8,13 +8,10 @@ file_name = '../assets/example_data/MYD05_L2.A2017109.0000.006.NRT.hdf'
 
 file = SD(file_name, SDC.READ)
 
-print('Data size: ')
-print( file.info() )
-
-
+print('Data size: ' + file.info())
 datasets = file.datasets()
 
-
+# Retrieve correctly scaled data
 def scaled_data(sds_obj):
     data = sds_obj.get()
     if 'add_offset' in sds_obj.attributes():
@@ -28,11 +25,11 @@ def scaled_data(sds_obj):
     scaled_data = (data - offset)*factor
     return scaled_data
 
+# Print description of data if it exists
 def print_description(sds_obj):
     if 'description' in sds_obj.attributes():
         string = sds_obj.attributes()['description']
         print(string)
-
 
 # Print data contents
 print('\nData content:')
