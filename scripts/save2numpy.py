@@ -40,7 +40,8 @@ def list_datasets(fileobj):
 if __name__ == "__main__":
     # Create output folder
     infolder = os.path.split(files[0])[0]
-    outfolder = os.path.join(infolder,"numpy")    for path in files:
+    outfolder = os.path.join(infolder,"numpy")
+    for path in files:
 
         #pdb.set_trace()
         fileobj = SD(path, SDC.READ)
