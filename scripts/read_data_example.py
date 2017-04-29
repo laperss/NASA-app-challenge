@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # This is an example of how the pyhdf package can be used to access MODIS data
-
 from pyhdf.SD import SD, SDC
 import numpy as np
+from hdf_functions import scaled_data, print_description
 
 file_name = '../assets/example_data/MYD05_L2.A2017109.0000.006.NRT.hdf'
 
@@ -10,26 +10,6 @@ file = SD(file_name, SDC.READ)
 
 print('Data size: ' + str(file.info()[0]) + ', ' + str(file.info()[1]))
 datasets = file.datasets()
-
-# Retrieve correctly scaled data
-def scaled_data(sds_obj):
-    data = sds_obj.get()
-    if 'add_offset' in sds_obj.attributes():
-        offset = sds_obj.attributes()['add_offset']
-    else:
-        offset = 0.0
-    if 'scale_factor' in sds_obj.attributes():        
-        factor = sds_obj.attributes()['scale_factor']
-    else:
-        factor = 1.0
-    scaled_data = (data - offset)*factor
-    return scaled_data
-
-# Print description of data if it exists
-def print_description(sds_obj):
-    if 'description' in sds_obj.attributes():
-        string = sds_obj.attributes()['description']
-        print(string)
 
 # Print data contents
 print('\nData content:')
