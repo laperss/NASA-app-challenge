@@ -11,7 +11,7 @@ import os.path
 #DAT_DIR = '../assets/example_data'
 DAT_DIR = '/mnt/stockholm'
 files = sorted(glob(DAT_DIR+'/*.A2017*'))
-keys = ['Atmospheric_Water_Vapor_QA_Mean_Mean', 'Aerosol_Optical_Depth_Average_Ocean_QA_Mean_Mean', 'Aerosol_Optical_Depth_Land_QA_Mean_Mean','Cloud_Optical_Thickness_Combined_Log_Mean_Mean']
+keys = ['Atmospheric_Water_Vapor_QA_Mean_Mean', 'Aerosol_Optical_Depth_Average_Ocean_QA_Mean_Mean', 'Aerosol_Optical_Depth_Land_QA_Mean_Mean','Cloud_Optical_Thickness_Combined_Log_Mean_Mean', 'Pressure_Level']
 
 def scaled_data(sds_obj):
     data = sds_obj.get()
@@ -77,8 +77,14 @@ if __name__ == "__main__":
     #    plt.imshow(np.where(np.sum(data, axis=0) < -2, -2, np.sum(data, axis=0)), cmap='afmhot', interpolation='nearest')
     #    plt.show()
 
-    # Cloud AoD
+    # Cloud 
         sds_obj = fileobj.select(keys[3])
         print_description(sds_obj)
         data = scaled_data(sds_obj)
         np.save(basefile_out[:-4] + '_Cloud.npy', data)
+
+    # Pressure
+        sds_obj = fileobj.select(keys[4])
+        print_description(sds_obj)
+        data = scaled_data(sds_obj)
+        np.save(basefile_out[:-4] + '_Pressure.npy', data)
