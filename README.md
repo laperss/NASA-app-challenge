@@ -1,4 +1,4 @@
-# NASA-app-challenge
+![banner](assets/banner.png)
 KTH Team contributions for the NASA Space App Challenge 2017. Our team is working towards assiting in solving the problems described in the [Every Cloud Challenge](https://2017.spaceappschallenge.org/challenges/warning-danger-ahead/every-cloud/details).
 
 Recent research indicates a relationship between the amount of aerosol particles in the atmosphere and different meterological conditions. This information could be used to predict the risk of severe storms before they happen. 
