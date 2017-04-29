@@ -8,10 +8,15 @@ Recent research indicates a relationship between the amount of aerosol particles
 * [HDF4](https://support.hdfgroup.org/)
 * [Python-HDF4](https://pypi.python.org/pypi/python-hdf4)
 
+  For plotting data in python
+* [mpltoolkits.basemap](https://matplotlib.org/basemap/)
+
 ## Links
 * [Mesoscale Convective Systems (MCS)](https://en.wikipedia.org/wiki/Mesoscale_convective_system)
 * [Reading HDF files in Python](http://www.science-emergence.com/Articles/How-to-read-a-MODIS-HDF-file-using-python-/)
 * [NASA MODIS Data](https://modis.gsfc.nasa.gov/data/)
 
 ## Instructions
-TODO
+* To run example script, in scripts folder:  
+  `python read_data_example.py`
+  this should print information about the content of the HDF file in assets/example_data/.
