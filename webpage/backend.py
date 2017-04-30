@@ -5,7 +5,7 @@ from timeseriesPlotter import TimeSeriesPlotter
 
 app = Flask(__name__, static_url_path='')
 
-@app.route('/getTimeseries/<lon>/<lat>')
+@app.route('/getTimeseries/<lon>/<lat>/image.png')
 def getTimeseries(lon, lat):
     lon, lat = float(lon), float(lat)
     png_output = TSP.plot(lon,lat)
