@@ -24,6 +24,7 @@ class TimeSeriesPlotter(object):
         onePoint = self.df[np.logical_and(self.df.long==lon, self.df.lat==lat)]
 
         if onePoint.size > 0:
+            plt.figure(figsize=(6.4, 4.8), dpi=100)
             plt.plot(onePoint.day, onePoint.aod, label="Aerosols")
             plt.plot(onePoint.day, onePoint.cloud, label="Cloudiness")
             plt.plot(onePoint.day, onePoint.vapor, label="Atmospheric vapor")
@@ -31,6 +32,7 @@ class TimeSeriesPlotter(object):
             plt.xlabel("Day in year 2017")
             plt.ylabel("Arbitrary and different units")
             plt.legend()
+            plt.tight_layout()
             png_output = BytesIO()
             canvas=FigureCanvas(plt.gcf())
             canvas.print_png(png_output)
