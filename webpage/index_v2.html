@@ -25,8 +25,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12" style="text-align: center; margin: 1em;">
+        <div class="col-md-8" style="text-align: center; padding: 1em;">
             <img src="??" width="720" height="360" id="mainImg">
+        </div>
+        <div class="col-md-4" style="text-align: center; padding-top: 5em;">
+            <img src="??" width="200" height="150" id="sideImg">
         </div>
     </div>
 
@@ -50,9 +53,19 @@
             var what = $("#whatSelect").val();
             var when = '2017'+pad(day, 3);
             console.log(day + ": " + what);
-            $("#mainImg").attr('src', '/static/png/MYD08_E3.A'+when+'_'+what+'.png');
+            $("#mainImg").attr('src', 'static/png/MYD08_E3.A'+when+'_'+what+'.png');
             $("#dayField").html(day);
         }
+
+        function reloadSideImg(lon, lat) {
+            //var day = $("#slider").slider('value');
+            //var when = '2017'+pad(day, 3);
+            //var what = $("#whatSelect").val();
+            //console.log(day + ": " + what);
+            $("#sideImg").attr('src', "http://localhost:5000/getTimeseries/"+lon+"/"+lat+"/image.png");
+        }
+
+
         $( "#slider" ).slider({
             slide: reloadImg,
             min: 1,
@@ -61,7 +74,13 @@
             value: 1
         });
         $("#whatSelect").on('change', reloadImg);
+        $("#mainImg").on('click', function (event) {
+           var offset = $("#mainImg").offset();
+           var lon = event.originalEvent.pageX - offset.left;
+           var lat = event.originalEvent.pageY - offset.top;
+           reloadSideImg(lon, lat);
 
+        });
         reloadImg();
     });
 </script>
