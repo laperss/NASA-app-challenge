@@ -3,8 +3,6 @@ import pandas as pd
 import matplotlib
 matplotlib.use('AGG')
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-#from matplotlib.figure import Figure
-from matplotlib.dates import DateFormatter
 import matplotlib.pyplot as plt
 
 # For Flask output
@@ -24,8 +22,6 @@ class TimeSeriesPlotter(object):
         lon = round(lon)
         lat = round(lat)
         onePoint = self.df[np.logical_and(self.df.long==lon, self.df.lat==lat)]
-        #fig = Figure()
-        #plt.figure(fig)
 
         if onePoint.size > 0:
             plt.plot(onePoint.day, onePoint.aod, label="Aerosols")
@@ -43,5 +39,4 @@ class TimeSeriesPlotter(object):
             # No data
             png_output = self.error_img
 
-        #plt.show()
         return png_output
