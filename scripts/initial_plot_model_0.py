@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import statsmodels.formula.api as sm
+import scipy.stats  as stats
+import xgboost as xgb
 
 
 datapath_aod = "../data_local/MOD08_E3.A2017105.006.2017118135856_AoD.npy"
@@ -18,6 +20,9 @@ print(aod.shape)
 
 ols_df  = pd.DataFrame({"vap" : vap.ravel(), "A" : aod[0,:,:].ravel()
                         , "B" : aod[1,:,:].ravel(),"C" : aod[2,:,:].ravel() })
+
+dtrain = xgb.DMatrix(ols_df["A","B","C"])
+
 
 result = sm.ols(formula="vap  ~ A +1 ", data=ols_df).fit()
 vap = 1
@@ -49,6 +54,15 @@ plt.draw()
 plt.figure(2)
 plt.imshow(pred_im, cmap='afmhot', interpolation='nearest')
 plt.draw()
-plt.show()
 
-i_1 = i[1:]+i[0:1]
+
+pred_df = pred_df[ np.logical_and( pred_df.A < 2, np.logical_and( pred_df.A > -1,pred_df.vap > -1)) ]
+#pred_df = pred_df.sample(frac=0.05)
+print(stats.pearsonr(pred_df['vap'], pred_df['A']))
+print(pred_df.corr())
+plt.figure(3)
+plt.scatter(pred_df["A"],pred_df["vap"],s=0.5)
+plt.xlabel("AoD")
+plt.ylabel("Vapor")
+plt.draw()
+plt.show()
