@@ -8,9 +8,20 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style type="text/css">
+        body {
+            background: linear-gradient(white, gray) gray no-repeat 100%;
+            background-size: 100%;
+        }
+        #mainContainer {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="container" style="margin-top: 1em;">
+<div id="bigContainer">
+<div class="container" style="margin-top: 1em; padding: 1em;" id="mainContainer">
     <div class="row">
         <div class="col-md-6">
             <select class="form-control" id="whatSelect">
@@ -21,17 +32,24 @@
         </div>
         <div class="col-md-6" style="vertical-align: middle; padding-top: 0.2em;">
             <div id="slider"></div>
-            <div>Day <span id="dayField">x</span> in 2017</div>
+            <div>Day <span id="dayField">x</span> in year 2017</div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12" style="text-align: center; margin: 1em;">
+        <div class="col-md-8" style="text-align: center; padding-top: 1em; padding-right: 1em;">
             <img src="??" width="720" height="360" id="mainImg">
         </div>
+        <div class="col-md-4" style="text-align: center; padding-top: 0;">
+            <div>
+                At coords: (<span id="lonField">x</span>,<span id="latField">x</span>)
+            </div>
+            <div>
+                <img src="??" width="360" height="360" id="sideImg">
+            </div>
+        </div>
     </div>
-
 </div>
-
+</div>
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -50,9 +68,21 @@
             var what = $("#whatSelect").val();
             var when = '2017'+pad(day, 3);
             console.log(day + ": " + what);
-            $("#mainImg").attr('src', '/static/png/MYD08_E3.A'+when+'_'+what+'.png');
+            $("#mainImg").attr('src', 'static/png/MYD08_E3.A'+when+'_'+what+'.png');
             $("#dayField").html(day);
         }
+
+        function reloadSideImg(lon, lat) {
+            //var day = $("#slider").slider('value');
+            //var when = '2017'+pad(day, 3);
+            //var what = $("#whatSelect").val();
+            //console.log(day + ": " + what);
+            $("#lonField").html(lon);
+            $("#latField").html(lat);
+            $("#sideImg").attr('src', "http://localhost:5000/getTimeseries/"+lon+"/"+lat+"/image.png");
+        }
+
+
         $( "#slider" ).slider({
             slide: reloadImg,
             min: 1,
@@ -61,7 +91,15 @@
             value: 1
         });
         $("#whatSelect").on('change', reloadImg);
+        $("#mainImg").on('click', function (event) {
+           var offset = $("#mainImg").offset();
+           var lon = event.originalEvent.pageX - offset.left;
+           var lat = event.originalEvent.pageY - offset.top;
+           lon = Math.floor(lon/2) - 180;
+           lat = 90 - Math.floor(lat/2);
+           reloadSideImg(lon, lat);
 
+        });
         reloadImg();
     });
 </script>
